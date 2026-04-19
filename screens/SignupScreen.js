@@ -1,0 +1,139 @@
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
+import { COLORS } from "../constants/theme";
+import { NeonButton, DarkInput } from "../components/SlipInUI";
+
+export default function SignupScreen({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSignup = () => {
+    if (!email || !password || !confirm) {
+      setError("Please fill in all fields");
+      return;
+    }
+    if (password !== confirm) {
+      setError("Passwords do not match");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    // Demo: simulate signup then go to onboarding questions
+    setTimeout(() => {
+      setLoading(false);
+      navigation.replace("OnboardingQuestions");
+    }, 800);
+  };
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={[styles.glowCircle]} />
+
+        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
+          <Text style={styles.backText}>← Back</Text>
+        </TouchableOpacity>
+
+        <View style={styles.header}>
+          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.subtitle}>Join the scene. Find your people.</Text>
+        </View>
+
+        <View style={styles.fieldGroup}>
+          <DarkInput
+            placeholder="Email address"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <DarkInput
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+          <DarkInput
+            placeholder="Confirm password"
+            value={confirm}
+            onChangeText={setConfirm}
+            secureTextEntry
+            returnKeyType="done"
+            onSubmitEditing={handleSignup}
+          />
+        </View>
+
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+        <Text style={styles.terms}>
+          By creating an account, you agree to our{" "}
+          <Text style={styles.termsLink}>Terms of Service</Text> and confirm you are 18+.
+        </Text>
+
+        <NeonButton
+          title={loading ? "Creating Account..." : "Create Account"}
+          onPress={handleSignup}
+          disabled={loading}
+          style={styles.btn}
+        />
+
+        <TouchableOpacity style={styles.loginLink} onPress={() => navigation.goBack()}>
+          <Text style={styles.loginLinkText}>
+            Already have an account?{" "}
+            <Text style={{ color: COLORS.neon }}>Sign In</Text>
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: COLORS.bg },
+  scroll: { flexGrow: 1, paddingHorizontal: 24, paddingTop: 60, paddingBottom: 40 },
+  glowCircle: {
+    position: "absolute",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    backgroundColor: COLORS.purple,
+    opacity: 0.07,
+    top: -60,
+    left: -60,
+  },
+  backBtn: { marginBottom: 24 },
+  backText: { color: COLORS.muted, fontSize: 15 },
+  header: { marginBottom: 32 },
+  title: { fontSize: 28, fontWeight: "700", color: COLORS.text, marginBottom: 6 },
+  subtitle: { fontSize: 15, color: COLORS.muted },
+  fieldGroup: { gap: 12, marginBottom: 16 },
+  errorText: { color: COLORS.error, fontSize: 14, marginBottom: 12 },
+  terms: { fontSize: 12, color: COLORS.muted, lineHeight: 18, marginBottom: 24 },
+  termsLink: { color: COLORS.neon },
+  btn: { marginBottom: 20 },
+  loginLink: { alignItems: "center" },
+  loginLinkText: { color: COLORS.muted, fontSize: 14 },
+});
