@@ -13,18 +13,24 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.slipin.demo"
+      "bundleIdentifier": "com.slipin.demo",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#0A0A0F"
       },
-      "package": "com.slipin.demo"
+      "package": "com.slipin.demo",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "webpack",
       "favicon": "./assets/images/logo.png"
-    }
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/remote-config"
+    ]
   }
 }
