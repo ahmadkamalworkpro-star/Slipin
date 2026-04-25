@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "537502426960",
+    "project_id": "slipin-app",
+    "storage_bucket": "slipin-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537502426960:android:be8fa8e0310cfd0fd8ae55",
+        "android_client_info": {
+          "package_name": "com.slipin.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNWnzLoORGEiTVlo82IT6X4GFII-3Y4To"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
